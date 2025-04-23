@@ -28,7 +28,7 @@ add action=drop chain=prerouting comment=ALFLOW-RAW-DROP-ATACK src-address-list=
 ###########################
 # PARA TESTA ATACK DE ICMP#
 ###########################
-#apt-get install hping3
+#apt-get install hping3 -y
 #sudo hping3 -1 --flood <endereço_IP_do_alvo>
 
 ################################
@@ -275,7 +275,7 @@ URL: http://127.0.0.1:5555/containers/exabgp/stop
 NOME:SEND-TELEGRAM
 TIPO: WEBHOOK
 METODO: POST
-URL: https://api.telegram.org/bot1814036548:AAEyKl5ifomRT4LiUDY_hPs80q7VDYs5cLU/sendMessage?
+URL: https://api.telegram.org/SEU-TOKEN/sendMessage?
 #OBS: AQUI VOCE COLOCA O SEU TOKEN DO TELEGRAM 
 
 #############################
@@ -288,7 +288,7 @@ Default recipients: [O-EMAIL-DO-DESTINATARIO]
 
 #Create SMTP sender
 NOME: server-email-postfix
-EMAIL: alert.alflow@gmail.com
+EMAIL: SEU-EMAIL@gmail.com
 HOST: 127.0.0.1
 PORTA: 25
 TLS: None
@@ -302,9 +302,9 @@ TIMESTAMP: 24HORAS
 TIPO: PDF
 #####CABECALHO:#########
 🟢 𝗔𝗟𝗙𝗟𝗢𝗪 - 𝗔𝗟𝗦𝗢𝗟𝗨𝗖𝗢𝗘𝗦 🟢
-**Fone:** (85) 981355252
-**Email:** alert.alflow@gmail.com
-**Site:** www.alcloud.com.br
+**Fone:** (85) 98135-XXXX
+**Email:** SEU-EMAIL@gmail.com
+**Site:** www.SEU-SITE.com.br
 
 ###################################
 # Documentacao Exporta Flow Huawei#
