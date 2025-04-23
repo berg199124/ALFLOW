@@ -52,19 +52,17 @@ apt-get install docker-compose -y
 # EXECULTANDO CONTAINER ALFLOW-SOAR #
 #####################################
 docker run -d --name exabgp -p 179:179 --cap-add=NET_ADMIN --net=host -v exabgp-conf:/usr/etc/exabgp mikenowak/exabgp
-docker stop exabgp
+docker start exabgp
 
 #######################
 # CONFIGURANDO EXABGP #
 #######################
 # ARQUIVO .CONF EXABGP
 #nano /var/lib/docker/volumes/exabgp-conf/_data/exabgp.conf
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/soar/exabgp.conf
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/soar/stop-exabgp.sh
 mv exabgp.conf /var/lib/docker/volumes/exabgp-conf/_data/
-cp stop-exabgp.sh /opt/
-chmod +x /opt/stop-exabgp.sh
-echo '*/1 * * * * /bin/bash /opt/stop-exabgp.sh' >> /etc/crontab
+#cp stop-exabgp.sh /opt/
+#chmod +x /opt/stop-exabgp.sh
+#echo '*/1 * * * * /bin/bash /opt/stop-exabgp.sh' >> /etc/crontab
 # ADD '*/1 * * * * /bin/bash /opt/stop-exabgp.sh' dentro da 'crontab' 
 
 #################################
@@ -78,10 +76,10 @@ echo '*/1 * * * * /bin/bash /opt/stop-exabgp.sh' >> /etc/crontab
 ####################################
 # RESTART APOS MODIFICACOES MANUAL #
 ####################################
-sudo service docker restart 
-sudo service docker stop
-sudo service docker start
-systemctl daemon-reload
+#sudo service docker restart 
+#sudo service docker stop
+#sudo service docker start
+#systemctl daemon-reload
 
 #############################
 # TESTANDO STATUS CONTAINER #
@@ -93,8 +91,6 @@ docker ps -a
 ###################################
 #EXECULTANDO CONTAINER SOAR-SCRIPT#
 ###################################
-wget --mirror https://repository.alcloud.com.br/fs/arquivos/alflow/soar/script/
-cd repository.alcloud.com.br/fs/arquivos/alflow/soar/
 mv script /opt/
 docker run -d -p 7771:80 --restart always --name soar-script -v "/opt/script/":/var/www/html php:7.2-apache 
 sleep 10
