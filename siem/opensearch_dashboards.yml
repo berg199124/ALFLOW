@@ -208,19 +208,27 @@ opensearch_security.readonly_mode.roles: [kibana_read_only]
 # Use this setting if you are running opensearch-dashboards without https
 opensearch_security.cookie.secure: false
 
+#######################################################################################################################
+# PARA BLOQUEAR O USUARIO ADMIN DESCOMENTO AS LINHAS ABAIXO E CREI UM NOVO USUARIO NO OPENSEARCH-DASHBOARD COMO ADMIN #
+#######################################################################################################################
+
+#opensearch_security.auth:
+#  forbidden_usernames:
+#    - "admin"
+
 #opensearch_security.auth.type: "basic"
 #opensearch_security.auth.basic.username: "admin"
 #opensearch_security.auth.basic.password: "123123"
 
 opensearchDashboards.branding: 
   logo: 
-     defaultUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/alflow01.PNG"
-     darkModeUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/alflow01.PNG"
+     defaultUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/alflow01.png"
+     darkModeUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/alflow01.png"
   mark:
-     defaultUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/LOGO_MARCA_DAGUA_AL.png"
-     darkModeUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/LOGO_MARCA_DAGUA_AL.png"
+     defaultUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/LOGO_MARCA_DAGUA_AL.png"
+     darkModeUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/LOGO_MARCA_DAGUA_AL.png"
   loadingLogo:
-     defaultUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/LOGO_MARCA_DAGUA_AL.png"
-     darkModeUrl: "http://dck01.alcloud.com.br:2000/fs/arquivos/logos/LOGO_MARCA_DAGUA_AL.png"
+     defaultUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/LOGO_MARCA_DAGUA_AL.png"
+     darkModeUrl: "http://dck01.alcloud.com.br:2001/fs/arquivos/LOGO_MARCA_DAGUA_AL.png"
   #faviconUrl: ""
   applicationTitle: "ALFLOW - ALSOLCUOES"

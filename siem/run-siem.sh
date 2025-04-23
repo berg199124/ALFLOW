@@ -57,37 +57,36 @@ apt install firmware-linux firmware-linux-free firmware-linux-nonfree -y
 # TUNNING KERNEL LINUX #
 ########################
 cp /sbin/sysctl /bin/
-echo "vm.swappiness=10" >> /etc/sysctl.conf
+echo "vm.swappiness=1" >> /etc/sysctl.conf
 echo "vm.max_map_count=262144" > /etc/sysctl.d/70-elasticsearch.conf
 cat <<EOF >/etc/sysctl.d/60-net.conf
 net.core.netdev_max_backlog=8192
-net.core.rmem_default=262144
-net.core.rmem_max=134217728
-net.ipv4.udp_rmem_min=131072
-net.ipv4.udp_mem=4194304 8388608 16777216
+net.core.rmem_default=536870912
+net.core.rmem_max=536870912
+net.ipv4.udp_rmem_min=16384
+net.ipv4.udp_mem=262144 524288 1048576
 fs.file-max=3263776
 fs.aio-max-nr=3263776
 net.core.default_qdisc=fq
 net.core.somaxconn=16384
+net.core.netdev_max_backlog=100000
 EOF
 sysctl -w vm.max_map_count=262144 && \
 sysctl -w net.core.netdev_max_backlog=8192 && \
-sysctl -w net.core.rmem_default=262144 && \
-sysctl -w net.core.rmem_max=134217728 && \
-sysctl -w net.ipv4.udp_rmem_min=131072 && \
+sysctl -w net.core.rmem_default=536870912 && \
+sysctl -w net.core.rmem_max=536870912 && \
+sysctl -w net.ipv4.udp_rmem_min=16384 && \
 sysctl -w sysctl -w fs.file-max=3263776 && \
 sysctl -w sysctl -w fs.aio-max-nr=3263776 && \
 sysctl -w net.core.default_qdisc=fq && \
 sysctl -w net.core.somaxconn=16384 && \
-sysctl -w net.ipv4.udp_mem='4194304 8388608 16777216'
+sysctl -w net.ipv4.udp_mem='262144 524288 1048576'
 
 sleep 5
 #########################
 # ATUALIZANDO OPENSEACH #
 #########################
 # echo -e "-Xms12g\n-Xmx12g" > /etc/opensearch/jvm.options
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/jvm.options
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/opensearch.service
 mv jvm.options /etc/opensearch/
 mv opensearch.service /lib/systemd/system/
 
@@ -95,7 +94,6 @@ mv opensearch.service /lib/systemd/system/
 # INSTALANDO ELASTIFLOW #
 #########################
 apt install libpcap-dev -y
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/flow-collector_5.6.0_linux_amd64.deb
 sudo dpkg -i flow-collector_5.6.0_linux_amd64.deb
 apt install -f
 systemctl daemon-reload
@@ -108,8 +106,6 @@ sleep 5
 # ATUALIZANDO ELASTIFLOW #
 ##########################
 # nano /etc/systemd/system/flowcoll.service.d/flowcoll.conf
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/flowcoll.conf
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/opensearch_dashboards.yml
 mv flowcoll.conf /etc/systemd/system/flowcoll.service.d/
 mv opensearch_dashboards.yml /etc/opensearch-dashboards/
 
@@ -123,16 +119,7 @@ sleep 5
 ########################
 # IMPORTANDO DASHBOARD #
 ########################
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/dashboards-1.0.x-flow-codex.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/dashboards-1.0.x-flow-ecs.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/dashboards-2.0.x-flow-codex.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/dashboards-2.0.x-flow-ecs.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/dashboard-alcloud-cdn.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/filtro-de-cdns.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/Advanced-Settings.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/interfaceuplink-donut.ndjson
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/dashboards/flow/DASHBOARD-ALFLOW-CDN-2.0.ndjson
-sleep 1
+
 curl -XPOST "http://admin:admin@127.0.0.1:5601/api/saved_objects/_import?overwrite=true" -k -H "osd-xsrf: true" -H "securitytenant: global" --form file=@dashboards-2.0.x-flow-ecs.ndjson
 sleep 1
 curl -XPOST "http://admin:admin@127.0.0.1:5601/api/saved_objects/_import?overwrite=true" -k -H "osd-xsrf: true" -H "securitytenant: global" --form file=@dashboards-2.0.x-flow-codex.ndjson
@@ -159,9 +146,6 @@ sleep 5
 apt-get install postfix mailutils -y
 mkdir postfix
 cd postfix
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/postfix/main.cf
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/postfix/sasl_passwd
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/siem/postfix/sasl_passwd.db
 cp main.cf /etc/postfix/
 cp sasl_passwd /etc/postfix/
 cp sasl_passwd.db /etc/postfix/
@@ -169,8 +153,8 @@ sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 sudo postmap /etc/postfix/sasl_passwd
 sudo systemctl restart postfix
 #TESTANDO ENVIO DE EMAIL E TELEGRAM(AQUI VOCE COLOCA O SEU EMAIL E O ID DO GRUPO DO TELEGRAM)
-echo "AL-FLOW Instalado com sucesso." | mail -s "Instalacao AL-FLOW" bergnogueira1991@gmail.com
-curl --location 'https://api.telegram.org/bot1814036548:AAEyKl5ifomRT4LiUDY_hPs80q7VDYs5cLU/sendMessage?text=%F0%9D%97%94%F0%9D%97%9F%F0%9D%97%99%F0%9D%97%9F%F0%9D%97%A2%F0%9D%97%AA%20-%20%F0%9D%97%94%F0%9D%97%9F%F0%9D%97%A6%F0%9D%97%A2%F0%9D%97%9F%F0%9D%97%A8%F0%9D%97%96%F0%9D%97%A2%F0%9D%97%98%F0%9D%97%A6%20%E2%9C%85%0AINSTALCAO%20CONCLUIDA%F0%9F%A5%B3&chat_id=-1001433339691'
+echo "AL-FLOW Instalado com sucesso." | mail -s "Instalacao AL-FLOW" SEU-EMAIL-AQUI@gmail.com
+curl --location 'https://api.telegram.org/SEU-TOKEN/sendMessage?text=%F0%9D%97%94%F0%9D%97%9F%F0%9D%97%99%F0%9D%97%9F%F0%9D%97%A2%F0%9D%97%AA%20-%20%F0%9D%97%94%F0%9D%97%9F%F0%9D%97%A6%F0%9D%97%A2%F0%9D%97%9F%F0%9D%97%A8%F0%9D%97%96%F0%9D%97%A2%F0%9D%97%98%F0%9D%97%A6%20%E2%9C%85%0AINSTALCAO%20CONCLUIDA%F0%9F%A5%B3&chat_id=ID-DO-SEU-GRUPO'
 
 sleep 5
 #############################
@@ -185,10 +169,9 @@ sleep 5
 #######################
 # ATUALIZANDO CRONTAB #
 #######################
-echo '*/1 * * * * /bin/bash /opt/init-opensearch.sh' >> /etc/crontab
-cd /opt
-wget https://repository.alcloud.com.br/fs/arquivos/alflow/init-opensearch.sh
-chmod +x init-opensearch.sh
+#echo '*/1 * * * * /bin/bash /opt/init-opensearch.sh' >> /etc/crontab
+#cd /opt
+#chmod +x init-opensearch.sh
 
 ##############
 # HORA CERTA #
