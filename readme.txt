@@ -222,8 +222,8 @@ Monitor ALERT-FLOW-OVERLOAD-TRAFIC-PPS acabou de entrar no status de alerta. Por
   - Início do período: {{ctx.periodStart}}
   - Fim do período: {{ctx.periodEnd}}
 🟢 𝗔𝗟𝗙𝗟𝗢𝗪 - 𝗔𝗟𝗦𝗢𝗟𝗨𝗖𝗢𝗘𝗦 🟢
-Fone: (85) 981355252
-Email: lindemberg@allnettelecom.com.br
+Fone: (85) 98135-XXXX
+Email: SEU-EMAIL@gmail.com
 ###### Actions 3 ######
 Action name: ACTION-SEND-TELEGRAM
 Channels: [Channel] SEND-TELEGRAM
@@ -237,9 +237,9 @@ ALERT OVERLOAD TRAFIC PPS
   - Início do período: {{ctx.periodStart}}
   - Fim do período: {{ctx.periodEnd}}
 🟢 𝗔𝗟𝗙𝗟𝗢𝗪 - 𝗔𝗟𝗦𝗢𝗟𝗨𝗖𝗢𝗘𝗦 🟢
-Fone: (85) 981355252
-Email: lindemberg@allnettelecom.com.br",
-   "chat_id": "-1001433339691"
+Fone: (85) 98135-XXXX
+Email: SEU-EMAIL@gmail.com",
+   "chat_id": "ID-DO-SEU-GRUPO-TELEGRAM"
 }
 #OBS: NESSE CAMPO CHAT_ID COLOQUEI O ID DO SEU GRUPO DO TELEGRAM PARA SER ENVIANDO A NOTIFICACAO PARA ELE
 
