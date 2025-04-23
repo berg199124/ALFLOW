@@ -1,0 +1,9 @@
+relayhost = [smtp.gmail.com]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = may
+header_size_limit = 4096000
+inet_interfaces = loopback-only
+smtpd_relay_restrictions = permit_mynetworks, reject
+
