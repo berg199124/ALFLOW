@@ -360,6 +360,19 @@ ipv6 netstream outbound
 #######################################
 # TUNNING MANUAL OPENSEARCH-DASHBOARD #
 #######################################
+
+#PARA PERSONALIZAR O INDEX DO OPENSEARCH-DASHBOARD
+# Directory: /usr/share/opensearch-dashboards/plugins/securityDashboards/server/index.js
+
+# loadbalancer_url: _configSchema.schema.maybe(_configSchema.schema.string()),
+#    login: _configSchema.schema.object({
+#      title: _configSchema.schema.string({
+#        defaultValue: 'Login ALFLOW - ALSOLUCOES'
+#      }),
+#      subtitle: _configSchema.schema.string({
+#        defaultValue: 'Caso tenha esquecido seu nome de usuario ou senha, entre em contato com o administrador do sistema.'
+#      }),
+
 DIRETORIO-WEB http://127.0.0.1:5601/app/management/opensearch-dashboards/settings
 
 Pin filters by default: On
