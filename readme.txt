@@ -9,6 +9,9 @@
 #####################
 # TIMER DATA E HORAS#
 #####################
+#ntpdate a.ntp.br
+#dpkg-reconfigure tzdata
+
 timedatectl
 timedatectl list-timezones
 sudo timedatectl set-timezone America/Fortaleza
