@@ -185,6 +185,9 @@ apt install chrony -y
 #ADD: server c.st1.ntp.br iburst nts
 #ADD: server d.st1.ntp.br iburst nts
 
+#ntpdate a.ntp.br
+#dpkg-reconfigure tzdata
+
 systemctl restart chronyd.service
 chronyc sourcestats
 chronyc sources
