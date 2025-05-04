@@ -364,6 +364,7 @@ ipv6 netstream outbound
 #PARA PERSONALIZAR O INDEX DO OPENSEARCH-DASHBOARD
 # Directory: /usr/share/opensearch-dashboards/plugins/securityDashboards/server/index.js
 
+# OBS: ESSE DADOS ABAIXO EXISTEM 2 VEZES DENTRO DESSE ARQUIVO MODIFIQUEI OS 2
 # loadbalancer_url: _configSchema.schema.maybe(_configSchema.schema.string()),
 #    login: _configSchema.schema.object({
 #      title: _configSchema.schema.string({
